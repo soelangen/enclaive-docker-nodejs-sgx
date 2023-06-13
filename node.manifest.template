@@ -1,6 +1,7 @@
-libos.entrypoint = "/usr/bin/node"
+libos.entrypoint = "/premain/premain-libos"
 
 loader.entrypoint = "file:{{ gramine.libos }}"
+loader.argv0_override = "/usr/bin/node"
 
 # for generic usage with mounted applications
 loader.insecure__use_host_env = true
@@ -14,6 +15,11 @@ loader.log_level = "error"
 # Node.js requires eventfd2() emulation
 sys.insecure__allow_eventfd = true
 
+loader.env.EDG_MARBLE_TYPE = { passthrough = true }
+loader.env.EDG_MARBLE_COORDINATOR_ADDR = { passthrough = true }
+loader.env.EDG_MARBLE_UUID_FILE = { passthrough = true }
+loader.env.EDG_MARBLE_DNS_NAMES = { passthrough = true }
+
 fs.mounts = [
     { path = "/tmp",                uri = "file:/tmp", type = "tmpfs" },
     { path = "/etc",                uri = "file:/etc" },
@@ -21,15 +27,21 @@ fs.mounts = [
     { path = "/lib",                uri = "file:{{ gramine.runtimedir() }}" },
     { path = "{{ arch_libdir }}",   uri = "file:{{ arch_libdir }}" },
     { path = "/app",                uri = "file:/app" },
-    { path = "/data",               uri = "file:/data", type = "encrypted", key_name = "data" },
+
+    #premain libos
+    { path = "/premain",            uri = "file:/premain" },
+
+    #volumes
+    { path = "/data",               uri = "file:/data", type = "encrypted", key_name = "node_data" },
+    { path = "/secrets",            uri = "file:/secrets", type = "encrypted", key_name = "node_secrets" },
 ]
-fs.insecure__keys.data = "ffeeddccbbaa99887766554433221100"
 
 sgx.enclave_size = "2G"
 sgx.thread_num = 24
 
 sgx.debug = false
-sgx.isvprodid = 1
+sgx.remote_attestation = "dcap"
+sgx.isvprodid = 13
 sgx.isvsvn    = 1
 
 sgx.trusted_files = [
@@ -49,10 +61,16 @@ sgx.trusted_files = [
     "file:/etc/os-release",
     "file:/etc/localtime",
     "file:/etc/ssl/openssl.cnf",
+
+    "file:/premain/premain-libos",
 ]
 
 sgx.allowed_files = [
     "file:/app/",
+    "file:/etc/ethers",
     "file:/etc/hosts",
+    "file:/etc/localtime",
     "file:/etc/resolv.conf",
+    "file:/etc/host.conf",
+    "file:uuid"
 ]
