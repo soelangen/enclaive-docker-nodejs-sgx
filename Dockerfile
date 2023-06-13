@@ -26,8 +26,8 @@ COPY ./node.manifest.template /app/
 
 RUN --mount=type=secret,id=signingkey gramine-manifest -Darch_libdir=/lib/x86_64-linux-gnu node.manifest.template node.manifest \
     && gramine-sgx-sign --key "/run/secrets/signingkey" --manifest node.manifest --output node.manifest.sgx \
-    && gramine-sgx-get-token -s ./node.sig -o attributes \
-    && cat ./attributes \
+    && gramine-sgx-get-token --output node.token --sig node.sig \
+    && cat -v attributes \
     && sed -i 's,https://localhost:8081/sgx/certification/v3/,https://172.17.0.1:8081/sgx/certification/v3/,g' /etc/sgx_default_qcnl.conf \
     && sed -i 's,"use_secure_cert": true,"use_secure_cert": false,g' /etc/sgx_default_qcnl.conf 
 
