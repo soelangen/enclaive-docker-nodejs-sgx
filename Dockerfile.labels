@@ -1,0 +1,2 @@
+FROM soelangen/pcc-node-demo
+LABEL pcc.mrenclave=0ca3a90d836a0d05b0635c559349c48c1e284a7cf8a1e9723e3f58f4b952e2bb pcc.mrsigner=732687e415c62b7ef197d4077a1d2b18fb6eca5d54b2e20412b642706f927e35
