@@ -33,7 +33,6 @@ fs.mounts = [
 
     #volumes
     { path = "/data",               uri = "file:/data", type = "encrypted", key_name = "node_data" },
-    { path = "/secrets",            uri = "file:/secrets", type = "encrypted", key_name = "node_secrets" },
 ]
 
 sgx.enclave_size = "2G"
