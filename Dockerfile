@@ -22,7 +22,7 @@ WORKDIR /app/
 
 COPY --from=marblerun /marblerun/build/premain-libos /premain/
 
-COPY ./node.manifest.template /app/
+COPY ./node.manifest.template ./entrypoint.sh /app/
 
 RUN --mount=type=secret,id=signingkey gramine-manifest -Darch_libdir=/lib/x86_64-linux-gnu node.manifest.template node.manifest \
     && gramine-sgx-sign --key "/run/secrets/signingkey" --manifest node.manifest --output node.manifest.sgx \
@@ -35,4 +35,4 @@ VOLUME /data/
 
 EXPOSE 3000
 
-ENTRYPOINT [ "/usr/local/bin/gramine-sgx", "node" ]
+ENTRYPOINT [ "/app/entrypoint.sh" ]
