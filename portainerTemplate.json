@@ -1,7 +1,7 @@
 [
    {
       "ImageName":"soelangen/pcc-nodejs",
-      "LogoURL":"",
+      "LogoURL":"https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg",
       "TemplateName":"NodeJS-pcc",
       "Inputs":[
          {
@@ -28,14 +28,11 @@
                }
             },
             "Argv":[
-               "/usr/bin/node"
+               "/usr/bin/node",
+               "/data/app.js"
             ]
          },
          "ManifestSecrets":{
-            "init":{
-               "type":"plain",
-               "UserDefined":true
-            },
             "nodeData":{
                "Type":"symmetric-key",
                "Size":128,
