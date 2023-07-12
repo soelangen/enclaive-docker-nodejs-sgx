@@ -1,2 +1,0 @@
-FROM soelangen/pcc-nodejs
-LABEL pcc.mrenclave=747932bdd1106ae963c450ab7d3a0567d62830289bb52b088fb8ab50c1a8bd4f pcc.mrsigner=732687e415c62b7ef197d4077a1d2b18fb6eca5d54b2e20412b642706f927e35
