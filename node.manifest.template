@@ -65,8 +65,6 @@ sgx.trusted_files = [
 ]
 
 sgx.allowed_files = [
-    "file:/app/",
-    "file:/data/",
     "file:/etc/ethers",
     "file:/etc/hosts",
     "file:/etc/localtime",
