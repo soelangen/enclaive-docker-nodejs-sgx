@@ -48,7 +48,7 @@ sgx.trusted_files = [
     "file:/usr/bin/node",
     "file:/manifest/entrypoint.sh",
     "file:/app/",
-    "file:/usr/lib/node_modules",
+    "file:/usr/lib/node_modules/",
 
     "file:/usr/share/zoneinfo/",
     "file:/usr/share/zoneinfo-icu/",
